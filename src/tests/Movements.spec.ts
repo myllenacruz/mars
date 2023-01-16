@@ -1,4 +1,6 @@
-const turnLeft = (direction: string): string | undefined => {
+import { Directions } from "../movements/types/Directions";
+
+const turnLeft = (direction: Directions): string | undefined => {
     switch(direction) {
         case "N":
             return "O";
@@ -14,7 +16,7 @@ const turnLeft = (direction: string): string | undefined => {
     }
 }
 
-const turnRight = (direction: string): string | undefined => {
+const turnRight = (direction: Directions): string | undefined => {
     switch(direction) {
         case "N":
             return "L";
