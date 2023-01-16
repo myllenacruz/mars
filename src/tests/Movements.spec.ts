@@ -15,7 +15,7 @@ function turnLeft(direction: Directions): Directions {
 
         case "L":
            return "N";
-    }
+    };
 }
 
 function turnRight(direction: Directions): Directions {
@@ -31,19 +31,21 @@ function turnRight(direction: Directions): Directions {
 
         case "O":
             return "N";
-    }
+    };
 }
 
 function move(
     direction: Directions, 
     position: Coordinates
-): number[] | undefined {
+): Coordinates {
     const [x, y] = position;
 
     if (direction === "N") return [x, y + 1];
     if (direction === "L") return [x + 1, y];
     if (direction === "S") return [x, y - 1];
     if (direction === "O") return [x - 1, y];
+
+    return position;
 }
 
 function execute(
@@ -54,13 +56,19 @@ function execute(
         return {
             ...initialState,
             direction: turnLeft(initialState.direction)
-        }
+        };
 
     if (command === "D")
         return {
             ...initialState,
             direction: turnRight(initialState.direction)
-        }
+        };
+
+    if (command === "M")
+        return {
+            ...initialState,
+            position: move(initialState.direction, initialState.position)
+        };
 }
 
 describe("Possible Movements", () => {
@@ -103,7 +111,15 @@ describe("Possible Movements", () => {
         });
 
     test("When moving N should increment the Y coordinate", () => {
-        expect(move("N", [1, 1])).toEqual([1, 2]);
+        const initialState: VehicleMovements = {
+            direction: "N",
+            position: [1, 1]
+        };
+
+        expect(execute("M", initialState)).toEqual({
+            ...initialState,
+            position: [1, 2]
+        });
     });
 
     test("When moving O should increment the X coordinate", () => {
