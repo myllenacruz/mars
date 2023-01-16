@@ -1,7 +1,7 @@
 import { Coordinates } from "../movements/types/Coordinates";
 import { Directions } from "../movements/types/Directions";
 
-const turnLeft = (direction: Directions): string | undefined => {
+function turnLeft(direction: Directions): string | undefined {
     switch(direction) {
         case "N":
             return "O";
@@ -17,7 +17,7 @@ const turnLeft = (direction: Directions): string | undefined => {
     }
 }
 
-const turnRight = (direction: Directions): string | undefined => {
+function turnRight(direction: Directions): string | undefined {
     switch(direction) {
         case "N":
             return "L";
@@ -33,10 +33,10 @@ const turnRight = (direction: Directions): string | undefined => {
     }
 }
 
-const move = (
+function move(
     direction: Directions, 
     position: Coordinates
-): number[] | undefined => {
+): number[] | undefined {
     const [x, y] = position;
 
     if (direction === "N") return [x, y + 1];
