@@ -1,0 +1,1 @@
+export type Directions = "N" | "L" | "S" | "O";
