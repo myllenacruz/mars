@@ -123,14 +123,39 @@ describe("Possible Movements", () => {
     });
 
     test("When moving O should increment the X coordinate", () => {
-        expect(move("O", [1, 1])).toEqual([0, 1]);
+        const initialState: VehicleMovements = {
+            direction: "O",
+            position: [1, 1]
+        };
+        
+
+        expect(execute("M", initialState)).toEqual({
+            ...initialState,
+            position: [0, 1]
+        });
     });
 
     test("When moving S should decrement the Y coordinate", () => {
-        expect(move("S", [1, 1])).toEqual([1, 0]);
+        const initialState: VehicleMovements = {
+            direction: "S",
+            position: [1, 1]
+        };
+
+        expect(execute("M", initialState)).toEqual({
+            ...initialState,
+            position: [1, 0]
+        });
     });
 
     test("When moving L should increment the X coordinate", () => {
-        expect(move("L", [1, 1])).toEqual([2, 1]);
+        const initialState: VehicleMovements = {
+            direction: "L",
+            position: [1, 1]
+        };
+
+        expect(execute("M", initialState)).toEqual({
+            ...initialState,
+            position: [2, 1]
+        });
     });
 });
