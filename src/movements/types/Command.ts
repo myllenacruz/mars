@@ -1,0 +1,1 @@
+export type Command = "E" | "D" | "M";
