@@ -5,38 +5,23 @@ const movements = new Movements();
 
 describe("Possible Movements", () => {
     test.each`
-        forward   | expected
-        ${"N"}    | ${"O"}
-        ${"O"}    | ${"S"}
-        ${"S"}    | ${"L"} 
-        ${"L"}    | ${"N"} 
+        forward   | direction | expected
+        ${"N"}    |  ${"E"}   |  ${"O"}
+        ${"O"}    |  ${"E"}   |  ${"S"}
+        ${"S"}    |  ${"E"}   |  ${"L"}
+        ${"L"}    |  ${"E"}   |  ${"N"}
+        ${"N"}    |  ${"D"}   |  ${"L"}
+        ${"S"}    |  ${"D"}   |  ${"O"}
+        ${"L"}    |  ${"D"}   |  ${"S"} 
+        ${"O"}    |  ${"D"}   |  ${"N"} 
         `
-        ("When facing $forward, turning left should cause to face $expected", ({ forward, expected }) => {  
+        ("When facing $forward, turning $direction should cause to face $expected", ({ forward, expected , direction }) => {
             const initialState: VehicleMovements = {
                 direction: forward,
                 position: [1, 1]
             };
 
-            expect(movements.execute("E", initialState)).toEqual({
-                ...initialState,
-                direction: expected
-            });
-        });
-    
-    test.each`
-        forward   | expected
-        ${"N"}    | ${"L"}
-        ${"S"}    | ${"O"}
-        ${"L"}    | ${"S"} 
-        ${"O"}    | ${"N"} 
-        `
-        ("When facing $forward, turning right should cause to face $expected", ({ forward, expected }) => {
-            const initialState: VehicleMovements = {
-                direction: forward,
-                position: [1, 1]
-            };
-
-            expect(movements.execute("D", initialState)).toEqual({
+            expect(movements.execute(direction, initialState)).toEqual({
                 ...initialState,
                 direction: expected
             });
