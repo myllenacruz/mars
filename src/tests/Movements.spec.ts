@@ -1,75 +1,7 @@
-import { Coordinates } from "../movements/types/Coordinates";
-import { Directions } from "../movements/types/Directions";
 import { VehicleMovements } from "../movements/types/VehicleMovements";
+import { Movements } from "../movements/Movements";
 
-function turnLeft(direction: Directions): Directions {
-    switch(direction) {
-        case "N":
-            return "O";
-
-        case "O":
-            return "S";
-
-        case "S":
-            return "L";
-
-        case "L":
-           return "N";
-    };
-}
-
-function turnRight(direction: Directions): Directions {
-    switch(direction) {
-        case "N":
-            return "L";
-
-        case "L":
-            return "S";
-
-        case "S":
-            return "O";
-
-        case "O":
-            return "N";
-    };
-}
-
-function move(
-    direction: Directions, 
-    position: Coordinates
-): Coordinates {
-    const [x, y] = position;
-
-    if (direction === "N") return [x, y + 1];
-    if (direction === "L") return [x + 1, y];
-    if (direction === "S") return [x, y - 1];
-    if (direction === "O") return [x - 1, y];
-
-    return position;
-}
-
-function execute(
-    command: string, 
-    initialState: VehicleMovements
-): VehicleMovements | undefined {
-    if (command === "E")
-        return {
-            ...initialState,
-            direction: turnLeft(initialState.direction)
-        };
-
-    if (command === "D")
-        return {
-            ...initialState,
-            direction: turnRight(initialState.direction)
-        };
-
-    if (command === "M")
-        return {
-            ...initialState,
-            position: move(initialState.direction, initialState.position)
-        };
-}
+const movements = new Movements();
 
 describe("Possible Movements", () => {
     test.each`
@@ -85,7 +17,7 @@ describe("Possible Movements", () => {
                 position: [1, 1]
             };
 
-            expect(execute("E", initialState)).toEqual({
+            expect(movements.execute("E", initialState)).toEqual({
                 ...initialState,
                 direction: expected
             });
@@ -104,7 +36,7 @@ describe("Possible Movements", () => {
                 position: [1, 1]
             };
 
-            expect(execute("D", initialState)).toEqual({
+            expect(movements.execute("D", initialState)).toEqual({
                 ...initialState,
                 direction: expected
             });
@@ -116,7 +48,7 @@ describe("Possible Movements", () => {
             position: [1, 1]
         };
 
-        expect(execute("M", initialState)).toEqual({
+        expect(movements.execute("M", initialState)).toEqual({
             ...initialState,
             position: [1, 2]
         });
@@ -129,7 +61,7 @@ describe("Possible Movements", () => {
         };
         
 
-        expect(execute("M", initialState)).toEqual({
+        expect(movements.execute("M", initialState)).toEqual({
             ...initialState,
             position: [0, 1]
         });
@@ -141,7 +73,7 @@ describe("Possible Movements", () => {
             position: [1, 1]
         };
 
-        expect(execute("M", initialState)).toEqual({
+        expect(movements.execute("M", initialState)).toEqual({
             ...initialState,
             position: [1, 0]
         });
@@ -153,7 +85,7 @@ describe("Possible Movements", () => {
             position: [1, 1]
         };
 
-        expect(execute("M", initialState)).toEqual({
+        expect(movements.execute("M", initialState)).toEqual({
             ...initialState,
             position: [2, 1]
         });
