@@ -16,11 +16,16 @@ function vehicleMovements(
     }
 };
 
-function run(input: string[]): VehicleMovements {
-    const [inputLocation] = input;
-    const [x, y, direction] = inputLocation.split(" ");
+function initalState(location: string) {
+    const [x, y, direction] = location.split(" ");
 
     return vehicleMovements(direction, [parseInt(x), parseInt(y)]);
+}
+
+function run(input: string[]): VehicleMovements {
+    const [inputLocation, command] = input;
+    
+    return movements.execute(command, initalState(inputLocation));
 }
 
 describe("Possible Movements", () => {
@@ -76,8 +81,8 @@ describe("Possible Movements", () => {
     });
 
     test("When executing program inputs", () => {
-        const inputLocation = ["1 2 N"];
+        const input = ["1 2 N", "EMEMEMEMM"];
 
-        expect(run(inputLocation)).toEqual(vehicleMovements("N", [1, 2]));
+        expect(run(input)).toEqual(vehicleMovements("N", [1, 3]));
     });
 });
