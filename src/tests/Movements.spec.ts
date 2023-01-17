@@ -1,7 +1,20 @@
 import { VehicleMovements } from "../movements/types/VehicleMovements";
 import { Movements } from "../movements/Movements";
+import { Directions } from "../movements/types/Directions";
+import { Coordinates } from "../movements/types/Coordinates";
 
-const movements = new Movements();
+const movements: Movements = new Movements();
+const startPosition: Coordinates = [1, 1];
+
+function vehicleMovements(
+    direction: Directions, 
+    position?: Coordinates
+): VehicleMovements {
+    return {
+        direction,
+        position: position || startPosition
+    }
+};
 
 describe("Possible Movements", () => {
     test.each`
@@ -16,63 +29,32 @@ describe("Possible Movements", () => {
         ${"O"}    |  ${"D"}   |  ${"N"} 
         `
         ("When facing $forward, turning $direction should cause to face $expected", ({ forward, expected , direction }) => {
-            const initialState: VehicleMovements = {
-                direction: forward,
-                position: [1, 1]
-            };
-
-            expect(movements.execute(direction, initialState)).toEqual({
-                ...initialState,
-                direction: expected
-            });
+            expect(
+                movements.execute(direction, vehicleMovements(forward))
+            ).toEqual(vehicleMovements(expected));
         });
 
     test("When moving N should increment the Y coordinate", () => {
-        const initialState: VehicleMovements = {
-            direction: "N",
-            position: [1, 1]
-        };
-
-        expect(movements.execute("M", initialState)).toEqual({
-            ...initialState,
-            position: [1, 2]
-        });
+        expect(
+            movements.execute("M", vehicleMovements("N"))
+        ).toEqual(vehicleMovements("N", [1, 2]));
     });
 
-    test("When moving O should increment the X coordinate", () => {
-        const initialState: VehicleMovements = {
-            direction: "O",
-            position: [1, 1]
-        };
-        
-
-        expect(movements.execute("M", initialState)).toEqual({
-            ...initialState,
-            position: [0, 1]
-        });
+    test("When moving O should decrement the X coordinate", () => {
+        expect(
+            movements.execute("M", vehicleMovements("O"))
+        ).toEqual(vehicleMovements("O", [0, 1]));
     });
 
     test("When moving S should decrement the Y coordinate", () => {
-        const initialState: VehicleMovements = {
-            direction: "S",
-            position: [1, 1]
-        };
-
-        expect(movements.execute("M", initialState)).toEqual({
-            ...initialState,
-            position: [1, 0]
-        });
+        expect(
+            movements.execute("M", vehicleMovements("S"))
+        ).toEqual(vehicleMovements("S", [1, 0]));
     });
 
     test("When moving L should increment the X coordinate", () => {
-        const initialState: VehicleMovements = {
-            direction: "L",
-            position: [1, 1]
-        };
-
-        expect(movements.execute("M", initialState)).toEqual({
-            ...initialState,
-            position: [2, 1]
-        });
+        expect(
+            movements.execute("M", vehicleMovements("L"))
+        ).toEqual(vehicleMovements("L", [2, 1]));
     });
 });
