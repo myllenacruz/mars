@@ -1,5 +1,5 @@
 
-import { VehicleMovements } from "../movements/types/VehicleMovements";
+import { VehicleMovements } from "../vehicle/types/VehicleMovements";
 import { Turn } from "./Turn";
 import { Move } from "./Move";
 

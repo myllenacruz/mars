@@ -1,8 +1,8 @@
-import { Movements } from "../movements/Movements";
-import { Program } from "../movements/Program";
-import { VehicleMovements } from "../movements/types/VehicleMovements";
-import { Directions } from "../movements/types/Directions";
-import { Coordinates } from "../movements/types/Coordinates";
+import { Movements } from "../vehicle/Movements";
+import { Program } from "../vehicle/Program";
+import { VehicleMovements } from "../vehicle/types/VehicleMovements";
+import { Directions } from "../vehicle/types/Directions";
+import { Coordinates } from "../vehicle/types/Coordinates";
 
 const movements: Movements = new Movements();
 const program: Program = new Program();
