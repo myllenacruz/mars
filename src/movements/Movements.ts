@@ -5,8 +5,8 @@ import { Move } from "./Move";
 
 export class Movements {
     private applyCommand(
-        command: string,
-        state: VehicleMovements
+        state: VehicleMovements,
+        command: string
     ): VehicleMovements {
         const turn = new Turn();
         const move = new Move();
@@ -36,11 +36,7 @@ export class Movements {
         commands: string, 
         state: VehicleMovements
     ): VehicleMovements {
-        let result = state;
-
-        for (const cmd of commands)
-            result = this.applyCommand(cmd, result);
-
-        return result;
+        const movements = commands.split("").reduce(this.applyCommand, state);
+        return movements;
     }
 }
