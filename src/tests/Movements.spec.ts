@@ -29,6 +29,8 @@ function output(state: VehicleMovements): string {
 function run(input: string[]): string[] {
     const outputs = [];
     let state: VehicleMovements;
+    
+    input.shift();
 
     while(input.length > 0) {
         const [inputLocation, command] = [input.shift(), input.shift()];
@@ -96,7 +98,7 @@ describe("Possible Movements", () => {
     });
 
     test("When executing program inputs", () => {
-        const input = ["1 2 N", "EMEMEMEMM", "3 3 L", "MMDMMDMDDM"];
+        const input = ["5 5 5", "1 2 N", "EMEMEMEMM", "3 3 L", "MMDMMDMDDM"];
 
         expect(run(input)).toEqual(["1 3 N", "5 1 L"]);
     });
