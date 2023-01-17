@@ -1,17 +1,17 @@
 import { VehicleMovements } from "../movements/types/VehicleMovements";
 import { Movements } from "../movements/Movements";
-import { Directions } from "../movements/types/Directions";
 import { Coordinates } from "../movements/types/Coordinates";
+import { Directions } from "../movements/types/Directions";
 
 const movements: Movements = new Movements();
 const startPosition: Coordinates = [1, 1];
 
 function vehicleMovements(
-    direction: any, 
+    direction: string, 
     position?: Coordinates
 ): VehicleMovements {
     return {
-        direction,
+        direction: direction as Directions,
         position: position || startPosition
     }
 };
@@ -69,6 +69,10 @@ describe("Possible Movements", () => {
         expect(
             movements.execute("EMEMEMEMM", vehicleMovements("N", [1, 2]))
         ).toEqual(vehicleMovements("N", [1, 3]))
+        
+        expect(
+            movements.execute("MMDMMDMDDM", vehicleMovements("L", [3, 3]))
+        ).toEqual(vehicleMovements("L", [5, 1]))
     });
 
     test("When executing program inputs", () => {
