@@ -15,7 +15,7 @@ export class Turn {
             case "L":
                 return "N";
         };
-    };
+    }
 
     public right(direction: Directions): Directions {
         switch(direction) {
@@ -31,5 +31,5 @@ export class Turn {
             case "O":
                 return "N";
         };
-    };
+    }
 }

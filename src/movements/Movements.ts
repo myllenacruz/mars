@@ -30,7 +30,7 @@ export class Movements {
             };
 
         return { ...state }
-    };
+    }
 
     public execute(
         commands: string, 
