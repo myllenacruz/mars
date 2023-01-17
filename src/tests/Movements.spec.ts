@@ -16,8 +16,10 @@ function vehicleMovements(
     }
 };
 
-function run(inputLocation: string): VehicleMovements {
+function run(input: string[]): VehicleMovements {
+    const [inputLocation] = input;
     const [x, y, direction] = inputLocation.split(" ");
+
     return vehicleMovements(direction, [parseInt(x), parseInt(y)]);
 }
 
@@ -70,7 +72,7 @@ describe("Possible Movements", () => {
     });
 
     test("When executing program inputs", () => {
-        const inputLocation = "1 2 N";
+        const inputLocation = ["1 2 N"];
 
         expect(run(inputLocation)).toEqual(vehicleMovements("N", [1, 2]));
     });
