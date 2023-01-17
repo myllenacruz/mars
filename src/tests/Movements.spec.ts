@@ -27,11 +27,20 @@ function output(state: VehicleMovements): string {
 }
 
 function run(input: string[]): string[] {
-    const [inputLocation, command] = input;
+    const outputs = [];
+    let state: VehicleMovements;
+
+    while(input.length > 0) {
+        const [inputLocation, command] = [input.shift(), input.shift()];
+
+        if (command && inputLocation) {
+            state = movements.execute(command, initalState(inputLocation));
+            
+            outputs.push(output(state));
+        }
+    }
     
-    return [
-        output(movements.execute(command, initalState(inputLocation)))
-    ];
+    return outputs;
 }
 
 describe("Possible Movements", () => {
@@ -87,8 +96,8 @@ describe("Possible Movements", () => {
     });
 
     test("When executing program inputs", () => {
-        const input = ["1 2 N", "EMEMEMEMM"];
+        const input = ["1 2 N", "EMEMEMEMM", "3 3 L", "MMDMMDMDDM"];
 
-        expect(run(input)).toEqual(["1 3 N"]);
+        expect(run(input)).toEqual(["1 3 N", "5 1 L"]);
     });
 });
