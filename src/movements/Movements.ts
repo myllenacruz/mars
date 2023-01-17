@@ -23,11 +23,7 @@ export class Movements {
                 direction: turn.right(state.direction)
             };
     
-        if (command === "M")
-            return {
-                ...state,
-                position: move.execute(state)
-            };
+        if (command === "M") return move.execute(state)
 
         return { ...state }
     }

@@ -1,17 +1,28 @@
 import { Coordinates } from "./types/Coordinates";
 import { VehicleMovements } from "./types/VehicleMovements";
+import { Directions } from "./types/Directions";
 
 export class Move {
+    public getPosition(
+        direction: Directions,
+        position: Coordinates
+    ): Coordinates {
+        const [x, y] = position;
+    
+        if (direction === "N") return [x, y + 1];
+        if (direction === "L") return [x + 1, y];
+        if (direction === "S") return [x, y - 1];
+        if (direction === "O") return [x - 1, y];
+    
+        return position;
+    };
+
     public execute(
         vehicleMovements: VehicleMovements
-    ): Coordinates {
-        const [x, y] = vehicleMovements.position;
-    
-        if (vehicleMovements.direction === "N") return [x, y + 1];
-        if (vehicleMovements.direction === "L") return [x + 1, y];
-        if (vehicleMovements.direction === "S") return [x, y - 1];
-        if (vehicleMovements.direction === "O") return [x - 1, y];
-    
-        return vehicleMovements.position;
-    };
+    ): VehicleMovements {
+        return {
+            ...vehicleMovements,
+            position: this.getPosition(vehicleMovements.direction, vehicleMovements.position)
+        }
+    }
 }
