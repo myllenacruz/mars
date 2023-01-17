@@ -2,32 +2,45 @@
 import { VehicleMovements } from "../movements/types/VehicleMovements";
 import { Turn } from "./Turn";
 import { Move } from "./Move";
-import { Command } from "./types/Command";
 
 export class Movements {
-    public execute(
-        command: Command, 
-        initialState: VehicleMovements
-    ): VehicleMovements | undefined {
+    private applyCommand(
+        state: VehicleMovements,
+        command: string
+    ): VehicleMovements {
         const turn = new Turn();
         const move = new Move();
 
         if (command === "E")
             return {
-                ...initialState,
-                direction: turn.left(initialState.direction)
+                ...state,
+                direction: turn.left(state.direction)
             };
     
         if (command === "D")
             return {
-                ...initialState,
-                direction: turn.right(initialState.direction)
+                ...state,
+                direction: turn.right(state.direction)
             };
     
         if (command === "M")
             return {
-                ...initialState,
-                position: move.execute(initialState.direction, initialState.position)
+                ...state,
+                position: move.execute(state)
             };
+
+        return { ...state }
     };
+
+    public execute(
+        commands: string, 
+        state: VehicleMovements
+    ): VehicleMovements {
+        let result = state;
+
+        for (const cmd of commands)
+            result = this.applyCommand(result, cmd);
+
+        return result;
+    }
 }
