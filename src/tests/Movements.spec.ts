@@ -57,4 +57,10 @@ describe("Possible Movements", () => {
             movements.execute("M", vehicleMovements("L"))
         ).toEqual(vehicleMovements("L", [2, 1]));
     });
+
+    test("When executing multiple commands", () => {
+        expect(
+            movements.execute("EMEMEMEMM", vehicleMovements("N", [1, 2]))
+        ).toEqual(vehicleMovements("N", [1, 3]))
+    });
 });
