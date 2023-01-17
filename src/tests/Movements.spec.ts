@@ -46,7 +46,7 @@ describe("Possible Movements", () => {
         ).toEqual(execution.vehicleMovements("L", [2, 1]));
     });
 
-    test("When executing multiple commands", () => {
+    test("Executing multiple commands", () => {
         expect(
             movements.execute("EMEMEMEMM", execution.vehicleMovements("N", [1, 2]))
         ).toEqual(execution.vehicleMovements("N", [1, 3]))
@@ -56,9 +56,9 @@ describe("Possible Movements", () => {
         ).toEqual(execution.vehicleMovements("L", [5, 1]))
     });
 
-    test("When executing program inputs", () => {
-        const input = ["5 5", "1 2 N", "EMEMEMEMM", "3 3 L", "MMDMMDMDDM"];
+    test("Executing program inputs", () => {
+        const inputs = ["5 5", "1 2 N", "EMEMEMEMM", "3 3 L", "MMDMMDMDDM"];
 
-        expect(execution.run(input)).toEqual(["1 3 N", "5 1 L"]);
+        expect(execution.run(inputs)).toEqual(["1 3 N", "5 1 L"]);
     });
 });

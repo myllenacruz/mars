@@ -29,10 +29,10 @@ export class Movements {
     }
 
     public execute(
-        commands: string, 
+        command: string, 
         state: VehicleMovements
     ): VehicleMovements {
-        const movements = commands.split("").reduce(this.applyCommand, state);
+        const movements = command.split("").reduce(this.applyCommand, state);
         return movements;
     }
 }

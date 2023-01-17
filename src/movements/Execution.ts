@@ -5,13 +5,13 @@ import { Movements } from "./Movements";
 
 export class Execution {
     public vehicleMovements(
-        direction: string, 
+        direction: Directions, 
         position?: Coordinates
     ): VehicleMovements {
         const startPosition: Coordinates = [1, 1];
 
         return {
-            direction: direction as Directions,
+            direction: direction,
             position: position || startPosition
         }
     };
@@ -29,15 +29,15 @@ export class Execution {
         return `${state.position[0]} ${state.position[1]} ${state.direction}`
     }
     
-    public run(input: string[]): string[] {
+    public run(inputs: string[]): string[] {
         const outputs: string[] = [];
         let state: VehicleMovements;
         
-        input.shift();
+        inputs.shift();
     
-        while(input.length > 0) {
+        while(inputs.length > 0) {
             const movements = new Movements();
-            const [inputLocation, command] = [input.shift(), input.shift()];
+            const [inputLocation, command] = [inputs.shift(), inputs.shift()];
     
             if (command && inputLocation) {
                 state = movements.execute(command, this.initalState(inputLocation));
