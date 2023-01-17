@@ -57,8 +57,17 @@ describe("Possible Movements", () => {
     });
 
     test("Executing program inputs", () => {
-        const inputs = ["5 5", "1 2 N", "EMEMEMEMM", "3 3 L", "MMDMMDMDDM"];
+        const inputs = [
+            "5 5", 
+            "1 2 N", 
+            "EMEMEMEMM", 
+            "3 3 L", 
+            "MMDMMDMDDM"
+        ];
 
-        expect(execution.run(inputs)).toEqual(["1 3 N", "5 1 L"]);
+        expect(execution.run(inputs)).toEqual([
+            "1 3 N", 
+            "5 1 L"
+        ]);
     });
 });

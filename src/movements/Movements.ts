@@ -25,7 +25,7 @@ export class Movements {
     
         if (command === "M") return move.execute(state)
 
-        return { ...state }
+        return state;
     }
 
     public execute(
