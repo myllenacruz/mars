@@ -7,7 +7,7 @@ const movements: Movements = new Movements();
 const startPosition: Coordinates = [1, 1];
 
 function vehicleMovements(
-    direction: Directions, 
+    direction: any, 
     position?: Coordinates
 ): VehicleMovements {
     return {
@@ -15,6 +15,11 @@ function vehicleMovements(
         position: position || startPosition
     }
 };
+
+function run(inputLocation: string): VehicleMovements {
+    const [x, y, direction] = inputLocation.split(" ");
+    return vehicleMovements(direction, [parseInt(x), parseInt(y)]);
+}
 
 describe("Possible Movements", () => {
     test.each`
@@ -62,5 +67,11 @@ describe("Possible Movements", () => {
         expect(
             movements.execute("EMEMEMEMM", vehicleMovements("N", [1, 2]))
         ).toEqual(vehicleMovements("N", [1, 3]))
+    });
+
+    test("When executing program inputs", () => {
+        const inputLocation = "1 2 N";
+
+        expect(run(inputLocation)).toEqual(vehicleMovements("N", [1, 2]));
     });
 });
