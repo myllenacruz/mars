@@ -1,8 +1,23 @@
 import { Movements } from "../movements/Movements";
-import { Execution } from "../movements/Execution";
+import { Program } from "../movements/Program";
+import { VehicleMovements } from "../movements/types/VehicleMovements";
+import { Directions } from "../movements/types/Directions";
+import { Coordinates } from "../movements/types/Coordinates";
 
 const movements: Movements = new Movements();
-const execution: Execution = new Execution();
+const program: Program = new Program();
+
+function vehicleState(
+    direction: Directions, 
+    position?: Coordinates
+): VehicleMovements {
+    const startPosition: Coordinates = [1, 1];
+
+    return {
+        direction: direction,
+        position: position || startPosition
+    }
+};
 
 describe("Possible Movements", () => {
     test.each`
@@ -18,42 +33,42 @@ describe("Possible Movements", () => {
         `
         ("When facing $forward, turning $direction should cause to face $expected", ({ forward, expected , direction }) => {
             expect(
-                movements.execute(direction, execution.vehicleMovements(forward))
-            ).toEqual(execution.vehicleMovements(expected));
+                movements.execute(direction, vehicleState(forward))
+            ).toEqual(vehicleState(expected));
         });
 
     test("When moving N should increment the Y coordinate", () => {
         expect(
-            movements.execute("M", execution.vehicleMovements("N"))
-        ).toEqual(execution.vehicleMovements("N", [1, 2]));
+            movements.execute("M", vehicleState("N"))
+        ).toEqual(vehicleState("N", [1, 2]));
     });
 
     test("When moving O should decrement the X coordinate", () => {
         expect(
-            movements.execute("M", execution.vehicleMovements("O"))
-        ).toEqual(execution.vehicleMovements("O", [0, 1]));
+            movements.execute("M", vehicleState("O"))
+        ).toEqual(vehicleState("O", [0, 1]));
     });
 
     test("When moving S should decrement the Y coordinate", () => {
         expect(
-            movements.execute("M", execution.vehicleMovements("S"))
-        ).toEqual(execution.vehicleMovements("S", [1, 0]));
+            movements.execute("M", vehicleState("S"))
+        ).toEqual(vehicleState("S", [1, 0]));
     });
 
     test("When moving L should increment the X coordinate", () => {
         expect(
-            movements.execute("M", execution.vehicleMovements("L"))
-        ).toEqual(execution.vehicleMovements("L", [2, 1]));
+            movements.execute("M", vehicleState("L"))
+        ).toEqual(vehicleState("L", [2, 1]));
     });
 
     test("Executing multiple commands", () => {
         expect(
-            movements.execute("EMEMEMEMM", execution.vehicleMovements("N", [1, 2]))
-        ).toEqual(execution.vehicleMovements("N", [1, 3]))
+            movements.execute("EMEMEMEMM", vehicleState("N", [1, 2]))
+        ).toEqual(vehicleState("N", [1, 3]))
         
         expect(
-            movements.execute("MMDMMDMDDM", execution.vehicleMovements("L", [3, 3]))
-        ).toEqual(execution.vehicleMovements("L", [5, 1]))
+            movements.execute("MMDMMDMDDM", vehicleState("L", [3, 3]))
+        ).toEqual(vehicleState("L", [5, 1]))
     });
 
     test("Executing program inputs", () => {
@@ -65,7 +80,7 @@ describe("Possible Movements", () => {
             "MMDMMDMDDM"
         ];
 
-        expect(execution.run(inputs)).toEqual([
+        expect(program.run(inputs)).toEqual([
             "1 3 N", 
             "5 1 L"
         ]);
