@@ -9,13 +9,17 @@ export class Movements {
         command: string, 
         state: VehicleMovements
     ): VehicleMovements {
-        const movements = command.split("").reduce(this.applyCommand, state);
-        return movements;
+        let result: VehicleMovements = state;
+
+        for (const cmd of command.split("")) 
+            result = this.applyCommand(cmd, result);
+
+        return result;
     }
     
     private applyCommand(
+        command: string,
         state: VehicleMovements,
-        command: string
     ): VehicleMovements {
         const turn = new Turn();
         const move = new Move();
