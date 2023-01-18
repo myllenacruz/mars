@@ -30,6 +30,6 @@ export class Turn {
     
             case "O":
                 return "N";
-        };
+        }
     }
 }
