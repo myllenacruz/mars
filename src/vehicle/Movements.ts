@@ -1,7 +1,4 @@
-
-import { VehicleState, Directions } from "@vehicle/types";
-import { Turn } from "@vehicle/Turn";
-import { Move } from "@vehicle/Move";
+import { VehicleState, Directions, Coordinates } from "@vehicle/types";
 
 export class Movements {
     public execute(
@@ -20,14 +17,67 @@ export class Movements {
         command: string,
         state: VehicleState,
     ): VehicleState {
-        const turn = new Turn();
-        const move = new Move();
         let direction: Directions = "" as Directions;
 
-        if (command === "E") direction = turn.left(state.direction);
-        if (command === "D") direction = turn.right(state.direction);
-        if (command === "M") return move.execute(state);
+        if (command === "E") direction = this.left(state.direction);
+        if (command === "D") direction = this.right(state.direction);
+        if (command === "M") return this.move(state);
 
         return { ...state, direction };
     }
+
+    public left(direction: Directions): Directions {
+        switch(direction) {
+            case "N":
+                return "O";
+    
+            case "O":
+                return "S";
+    
+            case "S":
+                return "L";
+    
+            case "L":
+                return "N";
+        };
+    }
+
+    public right(direction: Directions): Directions {
+        switch(direction) {
+            case "N":
+                return "L";
+    
+            case "L":
+                return "S";
+    
+            case "S":
+                return "O";
+    
+            case "O":
+                return "N";
+        }
+    }
+
+    public move(
+        vehicleState: VehicleState
+    ): VehicleState {
+        return {
+            ...vehicleState,
+            position: this.getPosition(vehicleState.direction, vehicleState.position)
+        }
+    }
+
+    public getPosition(
+        direction: Directions,
+        position: Coordinates
+    ): Coordinates {
+        const [x, y] = position;
+    
+        if (direction === "N") return [x, y + 1];
+        if (direction === "L") return [x + 1, y];
+        if (direction === "S") return [x, y - 1];
+        if (direction === "O") return [x - 1, y];
+    
+        return position;
+    };
 }
