@@ -17,10 +17,10 @@ export class Movements {
         command: string,
         state: VehicleState,
     ): VehicleState {
-        let direction: Directions = "" as Directions;
+        let direction = state.direction;
 
-        if (command === "E") direction = this.left(state.direction);
-        if (command === "D") direction = this.right(state.direction);
+        if (command === "E") direction = this.left(direction);
+        if (command === "D") direction = this.right(direction);
         if (command === "M") return this.move(state);
 
         return { ...state, direction };
@@ -75,16 +75,16 @@ export class Movements {
 
         switch(direction) {
             case "N":
-                return [x, y + 1]
+                return [x, y + 1];
             
             case "L":
-                return [x + 1, y]
+                return [x + 1, y];
             
             case "S":
-                return [x, y - 1]
+                return [x, y - 1];
             
             case "O":
-                return [x - 1, y]
+                return [x - 1, y];
         }
     };
 }
