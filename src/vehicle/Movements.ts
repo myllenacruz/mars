@@ -1,26 +1,25 @@
 
-import { VehicleMovements } from "../vehicle/types/VehicleMovements";
-import { Turn } from "./Turn";
-import { Move } from "./Move";
-import { Directions } from "./types/Directions";
+import { VehicleState, Directions } from "@vehicle/types";
+import { Turn } from "@vehicle/Turn";
+import { Move } from "@vehicle/Move";
 
 export class Movements {
     public execute(
         command: string, 
-        state: VehicleMovements
-    ): VehicleMovements {
-        let result: VehicleMovements = state;
+        state: VehicleState
+    ): VehicleState {
+        let newState: VehicleState = state;
 
         for (const cmd of command.split("")) 
-            result = this.applyCommand(cmd, result);
+            newState = this.applyCommand(cmd, newState);
 
-        return result;
+        return newState;
     }
     
     private applyCommand(
         command: string,
-        state: VehicleMovements,
-    ): VehicleMovements {
+        state: VehicleState,
+    ): VehicleState {
         const turn = new Turn();
         const move = new Move();
         let direction: Directions = "" as Directions;

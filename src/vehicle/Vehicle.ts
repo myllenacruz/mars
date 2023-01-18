@@ -1,12 +1,10 @@
-import { VehicleMovements } from "./types/VehicleMovements";
-import { Directions } from "./types/Directions";
-import { Coordinates } from "./types/Coordinates";
+import { VehicleState, Directions, Coordinates } from "@vehicle/types";
 
 export class Vehicle {
     public initalState(
         location: string,
         position?: Coordinates
-    ): VehicleMovements {
+    ): VehicleState {
         const [x, y, direction] = location.split(" ");
     
         return { 

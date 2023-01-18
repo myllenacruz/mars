@@ -1,8 +1,15 @@
-import { Coordinates } from "./types/Coordinates";
-import { VehicleMovements } from "./types/VehicleMovements";
-import { Directions } from "./types/Directions";
+import { Coordinates, VehicleState, Directions } from "@vehicle/types";
 
 export class Move {
+    public execute(
+        vehicleState: VehicleState
+    ): VehicleState {
+        return {
+            ...vehicleState,
+            position: this.getPosition(vehicleState.direction, vehicleState.position)
+        }
+    }
+
     public getPosition(
         direction: Directions,
         position: Coordinates
@@ -16,13 +23,4 @@ export class Move {
     
         return position;
     };
-
-    public execute(
-        vehicleMovements: VehicleMovements
-    ): VehicleMovements {
-        return {
-            ...vehicleMovements,
-            position: this.getPosition(vehicleMovements.direction, vehicleMovements.position)
-        }
-    }
 }

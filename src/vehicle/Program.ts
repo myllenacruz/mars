@@ -1,11 +1,11 @@
-import { Movements } from "./Movements";
-import { VehicleMovements } from "./types/VehicleMovements";
-import { Vehicle } from "./Vehicle";
+import { Movements } from "@vehicle/Movements";
+import { Vehicle } from "@vehicle/Vehicle";
+import { VehicleState } from "@vehicle/types";
 
 export class Program {
     public run(inputs: string[]): string[] {
         const outputs: string[] = [];
-        let state: VehicleMovements;
+        let state: VehicleState;
         
         inputs.shift();
     
@@ -25,7 +25,7 @@ export class Program {
         return outputs;
     }
     
-    private output(state: VehicleMovements): string {
+    private output(state: VehicleState): string {
         return `${state.position[0]} ${state.position[1]} ${state.direction}`;
     }
 }

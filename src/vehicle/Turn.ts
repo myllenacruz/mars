@@ -1,4 +1,4 @@
-import { Directions } from "./types/Directions";
+import { Directions } from "@vehicle/types";
 
 export class Turn {
     public left(direction: Directions): Directions {

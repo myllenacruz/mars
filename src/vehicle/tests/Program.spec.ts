@@ -1,8 +1,6 @@
-import { Movements } from "../Movements";
-import { Program } from "../Program";
-import { VehicleMovements } from "../types/VehicleMovements";
-import { Directions } from "../types/Directions";
-import { Coordinates } from "../types/Coordinates";
+import { Movements } from "@vehicle/Movements";
+import { Program } from "@vehicle/Program";
+import { VehicleState, Directions, Coordinates } from "@vehicle/types";
 
 const movements: Movements = new Movements();
 const program: Program = new Program();
@@ -10,7 +8,7 @@ const program: Program = new Program();
 function vehicleState(
     direction: Directions, 
     position?: Coordinates
-): VehicleMovements {
+): VehicleState {
     const startPosition: Coordinates = [1, 1];
 
     return {
