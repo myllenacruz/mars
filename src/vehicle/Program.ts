@@ -13,13 +13,11 @@ export class Program {
             const movements = new Movements();
             const vehicle = new Vehicle();
 
-            const [inputLocation, command] = [inputs.shift(), inputs.shift()];
+            const [inputLocation, command] = [inputs.shift()!, inputs.shift()!];
     
-            if (command && inputLocation) {
-                state = movements.execute(command, vehicle.initalState(inputLocation));
+            state = movements.execute(command, vehicle.initalState(inputLocation));
                 
-                outputs.push(this.output(state));
-            }
+            outputs.push(this.output(state));
         }
         
         return outputs;
