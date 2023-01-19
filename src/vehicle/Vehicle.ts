@@ -88,15 +88,12 @@ export class Vehicle {
         }
     };
     
-    public initalState(
-        location: string,
-        position?: Coordinates
-    ): VehicleState {
+    public initalState(location: string): VehicleState {
         const [x, y, direction] = location.split(" ");
     
         return { 
             direction: direction as Directions, 
-            position: position || [parseInt(x), parseInt(y)] 
+            position: [parseInt(x), parseInt(y)]
         };
     }
 }
