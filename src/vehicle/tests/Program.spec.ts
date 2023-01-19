@@ -1,8 +1,8 @@
-import { Movements } from "@vehicle/Movements";
+import { Vehicle } from "@vehicle/Vehicle";
 import { Program } from "@vehicle/Program";
 import { VehicleState, Directions, Coordinates } from "@vehicle/types";
 
-const movements: Movements = new Movements();
+const vehicle: Vehicle = new Vehicle();
 const program: Program = new Program();
 
 function vehicleState(
@@ -32,42 +32,42 @@ test.each
 ("When facing $forward, turning $direction should cause to face $expected", 
 	({ forward, expected , direction }) => {
 		expect(
-			movements.execute(direction, vehicleState(forward))
+			vehicle.execute(direction, vehicleState(forward))
 		).toEqual(vehicleState(expected));
    	}
 );
 
 test("When moving N should increment the Y coordinate", () => {
     expect(
-        movements.execute("M", vehicleState("N"))
+        vehicle.execute("M", vehicleState("N"))
     ).toEqual(vehicleState("N", [1, 2]));
 });
 
 test("When moving O should decrement the X coordinate", () => {
     expect(
-        movements.execute("M", vehicleState("O"))
+        vehicle.execute("M", vehicleState("O"))
     ).toEqual(vehicleState("O", [0, 1]));
 });
 
 test("When moving S should decrement the Y coordinate", () => {
     expect(
-        movements.execute("M", vehicleState("S"))
+        vehicle.execute("M", vehicleState("S"))
     ).toEqual(vehicleState("S", [1, 0]));
 });
 
 test("When moving L should increment the X coordinate", () => {
     expect(
-        movements.execute("M", vehicleState("L"))
+        vehicle.execute("M", vehicleState("L"))
     ).toEqual(vehicleState("L", [2, 1]));
 });
 
 test("Executing multiple commands", () => {
     expect(
-        movements.execute("EMEMEMEMM", vehicleState("N", [1, 2]))
+        vehicle.execute("EMEMEMEMM", vehicleState("N", [1, 2]))
     ).toEqual(vehicleState("N", [1, 3]));
     
     expect(
-        movements.execute("MMDMMDMDDM", vehicleState("L", [3, 3]))
+        vehicle.execute("MMDMMDMDDM", vehicleState("L", [3, 3]))
     ).toEqual(vehicleState("L", [5, 1]));
 });
 

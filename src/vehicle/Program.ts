@@ -1,4 +1,3 @@
-import { Movements } from "@vehicle/Movements";
 import { Vehicle } from "@vehicle/Vehicle";
 import { VehicleState } from "@vehicle/types";
 
@@ -10,12 +9,11 @@ export class Program {
         inputs.shift();
     
         while(inputs.length > 0) {
-            const movements = new Movements();
             const vehicle = new Vehicle();
 
             const [inputLocation, command] = [inputs.shift()!, inputs.shift()!];
-    
-            state = movements.execute(command, vehicle.initalState(inputLocation));
+
+            state = vehicle.execute(command, vehicle.initalState(inputLocation));
                 
             outputs.push(this.output(state));
         }
