@@ -88,42 +88,15 @@ test("Executing program inputs", () => {
     ]);
 });
 
-test("When moving O off the edge of the grid, should return failure and the last position", () => {
-    const input = [
-        "0 0", 
-        "0 0 O", 
-        "M"
-    ];
-
-    expect(program.run(input)).toEqual(["F 0 0 O"]);
-});
-
-test("When moving S off the edge of the grid, should return failure and the last position", () => {
-    const input = [
-        "0 0", 
-        "0 0 S", 
-        "M"
-    ];
-
-    expect(program.run(input)).toEqual(["F 0 0 S"]);
-});
-
-test("When moving N off the edge of the grid, should return failure and the last position", () => {
-    const input = [
-        "0 0", 
-        "0 0 N", 
-        "M"
-    ];
-
-    expect(program.run(input)).toEqual(["F 0 0 N"]);
-});
-
-test("When moving L off the edge of the grid, should return failure and the last position", () => {
-    const input = [
-        "0 0", 
-        "0 0 L", 
-        "M"
-    ];
-
-    expect(program.run(input)).toEqual(["F 0 0 L"]);
-});
+test.each`
+    direction                 |  expected
+    ${["0 0", "0 0 O", "M"]}  |  ${["F 0 0 O"]}
+    ${["0 0", "0 0 S", "M"]}  |  ${["F 0 0 S"]}
+    ${["0 0", "0 0 N", "M"]}  |  ${["F 0 0 N"]}
+    ${["0 0", "0 0 L", "M"]}  |  ${["F 0 0 L"]}
+`
+("When moving $direction off the edge of the grid, should return $expected as failure with last position", 
+    ({ direction, expected }) => {
+        expect(program.run(direction)).toEqual(expected);
+    }
+);
