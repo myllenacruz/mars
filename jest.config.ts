@@ -11,7 +11,10 @@ export default {
 		{ prefix: "<rootDir>/src/" }
 	),
 	collectCoverageFrom: ["<rootDir>/src/**/*.ts"],
-	coveragePathIgnorePatterns: ["/node_modules/"],
+	coveragePathIgnorePatterns: [
+    "/node_modules/", 
+    "<rootDir>/src/vehicle/types/"
+  ],
   preset: "ts-jest",
   testEnvironment: "node",
   testMatch: ["**/*.spec.ts"]  
