@@ -1,14 +1,15 @@
-import { VehicleState, Directions, Coordinates } from "@vehicle/types";
+import { VehicleState, Directions, Coordinates, VehicleStatus } from "@vehicle/types";
 
 export class Vehicle {
     public execute(
         command: string, 
-        state: VehicleState
-    ): VehicleState {
-        let newState: VehicleState = state;
+        state: VehicleStatus,
+        maxGridPosition: Coordinates
+    ): VehicleStatus {
+        let newState = state;
 
-        for (const cmd of command.split("")) 
-            newState = this.applyCommand(cmd, newState);
+        for (const cmd of command.split(""))
+            newState = this.applyCommand(cmd, newState, maxGridPosition);
 
         return newState;
     }
@@ -16,12 +17,13 @@ export class Vehicle {
     private applyCommand(
         command: string,
         state: VehicleState,
+        maxGridPosition: Coordinates
     ): VehicleState {
         let direction = state.direction;
 
         if (command === "E") direction = this.left(direction);
         if (command === "D") direction = this.right(direction);
-        if (command === "M") return this.move(state);
+        if (command === "M") return this.move(state, maxGridPosition);
 
         return { ...state, direction };
     }
@@ -59,12 +61,36 @@ export class Vehicle {
     }
 
     public move(
-        vehicleState: VehicleState
-    ): VehicleState {
+        vehicleState: VehicleState,
+        maxPosition: Coordinates
+    ): VehicleStatus {
+        const nextPosition = this.getPosition(vehicleState.direction, vehicleState.position);
+
+        if (this.isOutOfGrid(nextPosition, maxPosition)) 
+            return {
+                ...vehicleState,
+                status: "Failure"
+            }
+
         return {
             ...vehicleState,
-            position: this.getPosition(vehicleState.direction, vehicleState.position)
+            position: this.getPosition(vehicleState.direction, vehicleState.position),
+            status: "Success"
         }
+    }
+
+    public isOutOfGrid(
+        nextPosition: Coordinates, 
+        maxPosition: Coordinates
+    ): boolean {
+        if (
+            nextPosition[0] < 0 || 
+            nextPosition[1] < 0 || 
+            nextPosition[0] > maxPosition[0] ||
+            nextPosition[1] > maxPosition[1]
+        ) return true;
+
+        return false;
     }
 
     public getPosition(

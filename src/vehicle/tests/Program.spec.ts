@@ -1,19 +1,21 @@
 import { Vehicle } from "@vehicle/Vehicle";
 import { Program } from "@vehicle/Program";
-import { VehicleState, Directions, Coordinates } from "@vehicle/types";
+import { Directions, Coordinates, VehicleStatus } from "@vehicle/types";
 
 const vehicle: Vehicle = new Vehicle();
 const program: Program = new Program();
+const maxGridPosition: Coordinates = [5, 5];
 
 function vehicleState(
     direction: Directions, 
     position?: Coordinates
-): VehicleState {
+): VehicleStatus {
     const startPosition: Coordinates = [1, 1];
 
     return {
         direction: direction,
-        position: position || startPosition
+        position: position || startPosition,
+        status: "Success"
     }
 };
 
@@ -32,42 +34,42 @@ test.each
 ("When facing $forward, turning $direction should cause to face $expected", 
 	({ forward, expected , direction }) => {
 		expect(
-			vehicle.execute(direction, vehicleState(forward))
+			vehicle.execute(direction, vehicleState(forward), maxGridPosition)
 		).toEqual(vehicleState(expected));
    	}
 );
 
 test("When moving N should increment the Y coordinate", () => {
     expect(
-        vehicle.execute("M", vehicleState("N"))
+        vehicle.execute("M", vehicleState("N"), maxGridPosition)
     ).toEqual(vehicleState("N", [1, 2]));
 });
 
 test("When moving O should decrement the X coordinate", () => {
     expect(
-        vehicle.execute("M", vehicleState("O"))
+        vehicle.execute("M", vehicleState("O"), maxGridPosition)
     ).toEqual(vehicleState("O", [0, 1]));
 });
 
 test("When moving S should decrement the Y coordinate", () => {
     expect(
-        vehicle.execute("M", vehicleState("S"))
+        vehicle.execute("M", vehicleState("S"), maxGridPosition)
     ).toEqual(vehicleState("S", [1, 0]));
 });
 
 test("When moving L should increment the X coordinate", () => {
     expect(
-        vehicle.execute("M", vehicleState("L"))
+        vehicle.execute("M", vehicleState("L"), maxGridPosition)
     ).toEqual(vehicleState("L", [2, 1]));
 });
 
 test("Executing multiple commands", () => {
     expect(
-        vehicle.execute("EMEMEMEMM", vehicleState("N", [1, 2]))
+        vehicle.execute("EMEMEMEMM", vehicleState("N", [1, 2]), maxGridPosition)
     ).toEqual(vehicleState("N", [1, 3]));
     
     expect(
-        vehicle.execute("MMDMMDMDDM", vehicleState("L", [3, 3]))
+        vehicle.execute("MMDMMDMDDM", vehicleState("L", [3, 3]), maxGridPosition)
     ).toEqual(vehicleState("L", [5, 1]));
 });
 
@@ -84,4 +86,44 @@ test("Executing program inputs", () => {
         "1 3 N", 
         "5 1 L"
     ]);
+});
+
+test("When moving O off the edge of the grid, should return failure and the last position", () => {
+    const input = [
+        "0 0", 
+        "0 0 O", 
+        "M"
+    ];
+
+    expect(program.run(input)).toEqual(["F 0 0 O"]);
+});
+
+test("When moving S off the edge of the grid, should return failure and the last position", () => {
+    const input = [
+        "0 0", 
+        "0 0 S", 
+        "M"
+    ];
+
+    expect(program.run(input)).toEqual(["F 0 0 S"]);
+});
+
+test("When moving N off the edge of the grid, should return failure and the last position", () => {
+    const input = [
+        "0 0", 
+        "0 0 N", 
+        "M"
+    ];
+
+    expect(program.run(input)).toEqual(["F 0 0 N"]);
+});
+
+test("When moving L off the edge of the grid, should return failure and the last position", () => {
+    const input = [
+        "0 0", 
+        "0 0 L", 
+        "M"
+    ];
+
+    expect(program.run(input)).toEqual(["F 0 0 L"]);
 });
