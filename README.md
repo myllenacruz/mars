@@ -1,7 +1,9 @@
 <h1 align="center">Mars</h1>
 
-Mars faz parte de um desafio técnico e foi construído em TDD.
-Os testes garantem que o input e output propostos serão devidamente executados.
+Os veículos navegam por uma plataforma retangular, de modo que as câmeras que eles carregam tenham uma visão panorâmica e assim enviem à Terra todas as informações sobre o terreno. A posição e a localização de um veículo são representadas pela combinação de coordenadas na forma X e Y e uma letra representando um dos quatro pontos cardeais. A plataforma é dividida em uma grade para simplificar a navegação. 
+
+- `E` e `D` fazem o veículo virar 90 graus para a esquerda e para a direita, respectivamente, sem sair do lugar.
+- `M` faz o veículo se mover um ponto na grade e mantem virado na mesma direção em que estava.
 
 #### Input
 ```
